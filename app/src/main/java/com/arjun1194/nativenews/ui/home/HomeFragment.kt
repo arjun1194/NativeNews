@@ -5,18 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.arjun1194.nativenews.R
 import com.arjun1194.nativenews.data.model.Article
 import com.arjun1194.nativenews.data.model.NewsResponse
+import com.arjun1194.nativenews.data.model.TopHeadlinesResponse
 import com.arjun1194.nativenews.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -44,7 +40,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getTopHeadlines()
         homeViewModel.response.observe(viewLifecycleOwner){
             when(it){
-                is NewsResponse.Success -> showData(it.articles)
+                is NewsResponse.Success -> showData(it.topHeadlinesResponse)
                 is NewsResponse.Error -> showError(it.message)
             }
 
@@ -55,7 +51,7 @@ class HomeFragment : Fragment() {
         Toast.makeText(requireContext(),message,Toast.LENGTH_LONG).show()
     }
 
-    private fun showData(items:List<Article>){
+    private fun showData(items:TopHeadlinesResponse){
         Log.d(TAG, "showData: $items")
     }
 

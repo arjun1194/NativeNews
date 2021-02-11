@@ -2,6 +2,7 @@ package com.arjun1194.nativenews.api
 
 import com.arjun1194.nativenews.data.model.Article
 import com.arjun1194.nativenews.data.model.NewsResponse
+import com.arjun1194.nativenews.data.model.TopHeadlinesResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
@@ -18,7 +19,7 @@ interface NewsService {
     suspend fun getTopHeadlines(
     @Query("country") country:String? = "in",
     @Query("apiKey") apiKey:String? = "416399bd74834bf0b8cc23cbc9985360"
-    ): List<Article>
+    ): TopHeadlinesResponse
 
     companion object{
         fun create(): NewsService {
