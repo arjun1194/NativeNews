@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="top_headlines">Top Headlines</string>
+    <string name="shared_pref_file">news_pref</string>
 </resources>

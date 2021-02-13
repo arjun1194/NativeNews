@@ -22,4 +22,20 @@ fun String.toDate(): String {
 
 }
 
+fun String.isTimeGreaterThan(
+    hours: Int = 2
+): Boolean {
+    val dateAfterHours = Date(Date().time + hours * 60 * 60 * 1000)
+
+    val simpleDateFormat = SimpleDateFormat()
+    return try {
+        val date = simpleDateFormat.parse(this)!!
+        date.after(dateAfterHours)
+    } catch (e: Exception) {
+        false
+    }
+
+
+}
+
 
