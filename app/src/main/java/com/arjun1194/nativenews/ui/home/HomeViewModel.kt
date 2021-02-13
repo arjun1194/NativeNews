@@ -17,14 +17,20 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val newsRepository: NewsRepository) : ViewModel() {
 
     private val response = MutableLiveData<NewsResponse>()
+    val showLoader = MutableLiveData<Boolean>(false)
 
     fun getTopHeadlines(): MutableLiveData<NewsResponse> {
+        //show loader true
+        showLoader.postValue(true)
         viewModelScope.launch {
             newsRepository.getTopHeadlines()
                     .onEach {
-                      response.postValue(it)
+                        response.postValue(it)
+                        showLoader.postValue(false)
                     }.launchIn(viewModelScope)
         }
+
+        //show loader false
         return response
     }
 

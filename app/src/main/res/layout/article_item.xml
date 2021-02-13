@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.flexbox.FlexboxLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,7 +27,6 @@
             android:id="@+id/articleTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:text="Disney's Gina Carano firing denounced as 'Hollywood Blacklist' against conservatives - Fox News"
             style="@style/TextAppearance.MaterialComponents.Body1"
             />
@@ -52,10 +52,6 @@
         </com.google.android.flexbox.FlexboxLayout>
 
     </LinearLayout>
-
-
-
-
 
 
 </com.google.android.flexbox.FlexboxLayout>

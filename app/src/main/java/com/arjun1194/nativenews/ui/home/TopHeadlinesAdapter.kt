@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.arjun1194.nativenews.R
 import com.arjun1194.nativenews.data.model.Article
@@ -47,6 +48,10 @@ class TopHeadlinesAdapter : RecyclerView.Adapter<TopHeadlinesAdapter.TopHeadline
             title.text = item.title
             publishedAt.text = item.publishedAt.toDate()
             author.text = item.author
+            view.rootView.setOnClickListener{
+                val action = HomeFragmentDirections.actionNavigationHomeToArticleDetail(item.url)
+                view.findNavController().navigate(action)
+            }
         }
 
     }

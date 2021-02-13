@@ -15,7 +15,7 @@ fun String.toDate(): String {
         throw  e
     }
 
-    val newDateFormat = SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+    val newDateFormat = SimpleDateFormat("E, dd MMM yyyy", Locale.ENGLISH)
 
     return newDateFormat.format(date)
 

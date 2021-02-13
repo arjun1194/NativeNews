@@ -7,12 +7,24 @@
 
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/articleList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/article_item"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <include
+            android:id="@+id/loader"
+            android:visibility="gone"
+            layout="@layout/feed_loader" />
+
+    </FrameLayout>
+
 
 
 </layout>

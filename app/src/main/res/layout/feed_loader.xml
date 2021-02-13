@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shimmer_auto_start="true"
+    app:shimmer_repeat_count="4">
+
+    <include layout="@layout/article_item" />
+</com.facebook.shimmer.ShimmerFrameLayout>

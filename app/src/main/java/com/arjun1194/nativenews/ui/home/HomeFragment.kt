@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.articleList.adapter = topHeadlinesAdapter
         getTopHeadlines()
+        showLoader()
 
 
     }
@@ -45,6 +46,18 @@ class HomeFragment : Fragment() {
                 is NewsResponse.Error -> showError(it.message)
             }
 
+        }
+    }
+
+    private fun showLoader(){
+        homeViewModel.showLoader.observe(viewLifecycleOwner){
+             if(it or true){
+                 binding.articleList.visibility = View.GONE
+                 binding.loader.visibility = View.VISIBLE
+             }  else {
+                 binding.articleList.visibility = View.VISIBLE
+                 binding.loader.visibility = View.GONE
+             }
         }
     }
 
