@@ -35,8 +35,17 @@ class HomeFragment : Fragment() {
         binding.articleList.adapter = topHeadlinesAdapter
         getTopHeadlines()
         showLoader()
+        setupSwipeRefresh()
 
 
+    }
+
+    private fun setupSwipeRefresh(){
+        binding.swipeRefresh.apply{
+            setOnRefreshListener {
+                homeViewModel.getTopHeadlines()
+            }
+        }
     }
 
     private fun getTopHeadlines() {
@@ -58,6 +67,7 @@ class HomeFragment : Fragment() {
             } else {
                 binding.articleList.visibility = View.VISIBLE
                 binding.loader.visibility = View.GONE
+                binding.swipeRefresh.isRefreshing = false
             }
         }
     }
