@@ -13,7 +13,7 @@ fun String.toDate(): String {
     val date = try {
         simpleDateFormat.parse(this)!!
     } catch (e: Exception) {
-        throw  e
+        Date()
     }
 
     val newDateFormat = SimpleDateFormat("E, dd MMM yyyy", Locale.ENGLISH)

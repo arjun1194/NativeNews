@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.arjun1194.nativenews.R
 import com.arjun1194.nativenews.data.model.Article
 import com.arjun1194.nativenews.data.model.DataResponse
 import com.arjun1194.nativenews.databinding.FragmentHomeBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -79,6 +81,8 @@ class HomeFragment : Fragment() {
         Log.d(TAG, "showData: Total Results are  ${articles.size}")
         topHeadlinesAdapter.setItems(articles)
     }
+
+
 
     companion object {
         private const val TAG = "HomeFragment"

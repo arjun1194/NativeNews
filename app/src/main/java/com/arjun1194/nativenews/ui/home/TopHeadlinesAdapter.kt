@@ -9,6 +9,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.arjun1194.nativenews.R
 import com.arjun1194.nativenews.data.model.Article
+import com.arjun1194.nativenews.databinding.ArticleItemBinding
+import com.arjun1194.nativenews.utils.load
 import com.arjun1194.nativenews.utils.toDate
 import com.bumptech.glide.Glide
 import org.w3c.dom.Text
@@ -27,7 +29,7 @@ class TopHeadlinesAdapter : RecyclerView.Adapter<TopHeadlinesAdapter.TopHeadline
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopHeadlinesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
-        return TopHeadlinesViewHolder(view)
+        return TopHeadlinesViewHolder(ArticleItemBinding.bind(view))
     }
 
     override fun onBindViewHolder(holder: TopHeadlinesViewHolder, position: Int) {
@@ -37,20 +39,17 @@ class TopHeadlinesAdapter : RecyclerView.Adapter<TopHeadlinesAdapter.TopHeadline
 
     override fun getItemCount(): Int = items.size
 
-    inner class TopHeadlinesViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class TopHeadlinesViewHolder(private val binding: ArticleItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private val image: ImageView = view.findViewById(R.id.articleImage)
-        private val title: TextView = view.findViewById(R.id.articleTitle)
-        private val publishedAt: TextView = view.findViewById(R.id.articlePublishedAt)
-        private val author: TextView = view.findViewById(R.id.articleAuthor)
+
         fun bind(item: Article, position: Int) {
-            Glide.with(view.context).load(item.urlToImage).into(image)
-            title.text = item.title
-            publishedAt.text = item.publishedAt.toDate()
-            author.text = item.author
-            view.rootView.setOnClickListener{
+            binding.data = item.apply {
+                publishedAt = publishedAt.toDate()
+            }
+            item.urlToImage?.let { binding.articleImage.load(it) }
+            binding.card.setOnClickListener{
                 val action = HomeFragmentDirections.actionNavigationHomeToArticleDetail(item.url)
-                view.findNavController().navigate(action)
+                it.findNavController().navigate(action)
             }
         }
 
