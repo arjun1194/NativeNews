@@ -1,5 +1,6 @@
 package com.arjun1194.nativenews.utils
 
+
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,3 +21,5 @@ fun String.toDate(): String {
     return newDateFormat.format(date)
 
 }
+
+

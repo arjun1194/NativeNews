@@ -1,13 +1,12 @@
 package com.arjun1194.nativenews.ui.home
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.arjun1194.nativenews.data.model.NewsResponse
 import com.arjun1194.nativenews.data.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -16,22 +15,21 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val newsRepository: NewsRepository) : ViewModel() {
 
-    private val response = MutableLiveData<NewsResponse>()
-    val showLoader = MutableLiveData<Boolean>(false)
+    private val _response = MutableLiveData<NewsResponse>()
+    val response: LiveData<NewsResponse> = _response
+    val showLoader = MutableLiveData(false)
 
-    fun getTopHeadlines(): MutableLiveData<NewsResponse> {
-        //show loader true
+
+    fun getTopHeadlines() {
         showLoader.postValue(true)
         viewModelScope.launch {
             newsRepository.getTopHeadlines()
-                    .onEach {
-                        response.postValue(it)
-                        showLoader.postValue(false)
-                    }.launchIn(viewModelScope)
+                .onEach {
+                    _response.postValue(it)
+                    showLoader.postValue(false)
+                }.launchIn(viewModelScope)
         }
 
-        //show loader false
-        return response
     }
 
     companion object {

@@ -17,14 +17,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-     private val topHeadlinesAdapter = TopHeadlinesAdapter()
-     private val homeViewModel: HomeViewModel by viewModels()
-     lateinit var binding: FragmentHomeBinding
+    private val topHeadlinesAdapter = TopHeadlinesAdapter()
+    private val homeViewModel: HomeViewModel by viewModels()
+    lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
@@ -39,35 +39,36 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun getTopHeadlines(){
-        homeViewModel.getTopHeadlines().observe(viewLifecycleOwner){
-            when(it){
-                is NewsResponse.Success -> showData(it.topHeadlinesResponse)
-                is NewsResponse.Error -> showError(it.message)
+    private fun getTopHeadlines() {
+        homeViewModel.getTopHeadlines()
+        homeViewModel.response.observe(viewLifecycleOwner) {
+            when (it) {
+                is NewsResponse.Success -> showData(it.articles)
+                is NewsResponse.Error -> showError(it.throwable)
             }
 
         }
     }
 
-    private fun showLoader(){
-        homeViewModel.showLoader.observe(viewLifecycleOwner){
-             if(it){
-                 binding.articleList.visibility = View.GONE
-                 binding.loader.visibility = View.VISIBLE
-             }  else {
-                 binding.articleList.visibility = View.VISIBLE
-                 binding.loader.visibility = View.GONE
-             }
+    private fun showLoader() {
+        homeViewModel.showLoader.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.articleList.visibility = View.GONE
+                binding.loader.visibility = View.VISIBLE
+            } else {
+                binding.articleList.visibility = View.VISIBLE
+                binding.loader.visibility = View.GONE
+            }
         }
     }
 
-    private fun showError(message:String){
-        Toast.makeText(requireContext(),message,Toast.LENGTH_LONG).show()
+    private fun showError(throwable: Throwable) {
+        Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_LONG).show()
     }
 
-    private fun showData(items:TopHeadlinesResponse){
-        Log.d(TAG, "showData: Total Results are  ${items.totalResults}")
-        topHeadlinesAdapter.setItems(items.articles)
+    private fun showData(articles: List<Article>) {
+        Log.d(TAG, "showData: Total Results are  ${articles.size}")
+        topHeadlinesAdapter.setItems(articles)
     }
 
     companion object {

@@ -2,11 +2,11 @@ package com.arjun1194.nativenews.data.model
 
 sealed class NewsResponse {
     data class Success(
-        val topHeadlinesResponse: TopHeadlinesResponse
+        val articles: List<Article>
     ) : NewsResponse()
 
     data class Error(
-        val message: String,
+        val throwable: Throwable,
     ) : NewsResponse()
 
 }

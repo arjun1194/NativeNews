@@ -1,6 +1,7 @@
 package com.arjun1194.nativenews.di
 
 import com.arjun1194.nativenews.api.NewsService
+import com.arjun1194.nativenews.data.database.NewsDao
 import com.arjun1194.nativenews.data.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
@@ -14,7 +15,10 @@ class ViewModelModule {
 
     @Provides
     @ViewModelScoped
-    fun provideNewsRepository(newsService: NewsService): NewsRepository {
-        return NewsRepository(newsService)
+    fun provideNewsRepository(
+        newsService: NewsService,
+        newsDao: NewsDao
+    ): NewsRepository {
+        return NewsRepository(newsService, newsDao)
     }
 }
