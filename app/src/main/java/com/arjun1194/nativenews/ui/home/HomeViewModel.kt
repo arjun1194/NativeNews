@@ -16,15 +16,16 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val newsRepository: NewsRepository) : ViewModel() {
 
-    val response = MutableLiveData<NewsResponse>()
+    private val response = MutableLiveData<NewsResponse>()
 
-    fun getTopHeadlines(){
+    fun getTopHeadlines(): MutableLiveData<NewsResponse> {
         viewModelScope.launch {
             newsRepository.getTopHeadlines()
                     .onEach {
                       response.postValue(it)
                     }.launchIn(viewModelScope)
         }
+        return response
     }
 
     companion object {

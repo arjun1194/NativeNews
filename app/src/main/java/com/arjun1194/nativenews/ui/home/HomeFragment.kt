@@ -17,9 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+     private val topHeadlinesAdapter = TopHeadlinesAdapter()
      private val homeViewModel: HomeViewModel by viewModels()
-
-    lateinit var binding: FragmentHomeBinding
+     lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -32,13 +32,14 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.articleList.adapter = topHeadlinesAdapter
         getTopHeadlines()
+
 
     }
 
     private fun getTopHeadlines(){
-        homeViewModel.getTopHeadlines()
-        homeViewModel.response.observe(viewLifecycleOwner){
+        homeViewModel.getTopHeadlines().observe(viewLifecycleOwner){
             when(it){
                 is NewsResponse.Success -> showData(it.topHeadlinesResponse)
                 is NewsResponse.Error -> showError(it.message)
@@ -52,7 +53,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun showData(items:TopHeadlinesResponse){
-        Log.d(TAG, "showData: $items")
+        Log.d(TAG, "showData: Total Results are  ${items.totalResults}")
+        topHeadlinesAdapter.setItems(items.articles)
     }
 
     companion object {
