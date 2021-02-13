@@ -1,7 +1,6 @@
 package com.arjun1194.nativenews.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -12,22 +11,27 @@ import com.arjun1194.nativenews.R
 
 class ArticleDetail: AppCompatActivity() {
 
-    lateinit var webView: WebView
-    lateinit var webChromeClient: WebChromeClient
+    private lateinit var webView: WebView
     private val args: ArticleDetailArgs by navArgs()
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_detail)
+        Log.d(TAG, "onCreate: ${args.url}")
         initWebView()
     }
+
 
     private fun initWebView(){
         Log.d(TAG, "initWebView: Arguments -->> $args")
         webView = findViewById(R.id.webView)
-        webChromeClient = WebChromeClient()
-        webView.webChromeClient = webChromeClient
-        webView.loadUrl(args.url)
+        webView.apply{
+            webChromeClient = WebChromeClient()
+            webViewClient = WebViewClient()
+            settings.javaScriptEnabled = true
+            loadUrl(args.url)
+        }
     }
 
     companion object {

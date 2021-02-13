@@ -17,11 +17,11 @@ interface NewsService {
 
     @GET("top-headlines")
     suspend fun getTopHeadlines(
-    @Query("country") country:String? = "in",
-    @Query("apiKey") apiKey:String? = "416399bd74834bf0b8cc23cbc9985360"
+        @Query("country") country: String = "in",
+        @Query("apiKey") apiKey: String = "416399bd74834bf0b8cc23cbc9985360"
     ): TopHeadlinesResponse
 
-    companion object{
+    companion object {
         fun create(): NewsService {
             val logger = HttpLoggingInterceptor().apply { level = BASIC }
 

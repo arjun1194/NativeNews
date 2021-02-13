@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
 
     private fun showLoader(){
         homeViewModel.showLoader.observe(viewLifecycleOwner){
-             if(it or true){
+             if(it){
                  binding.articleList.visibility = View.GONE
                  binding.loader.visibility = View.VISIBLE
              }  else {
