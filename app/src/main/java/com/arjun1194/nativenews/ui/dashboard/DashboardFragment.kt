@@ -14,7 +14,9 @@ import com.arjun1194.nativenews.R
 import com.arjun1194.nativenews.data.model.DataResponse
 import com.arjun1194.nativenews.data.model.Source
 import com.arjun1194.nativenews.databinding.FragmentDashboardBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
     private val dashboardViewModel: DashboardViewModel by viewModels()
@@ -41,7 +43,7 @@ class DashboardFragment : Fragment() {
     private fun getSources() {
         dashboardViewModel.getSource()
         dashboardViewModel.sources.observe(viewLifecycleOwner) {
-            when(it){
+            when (it) {
                 is DataResponse.Error -> showError(it.error)
                 is DataResponse.Success -> showData(it.data)
             }
@@ -53,6 +55,6 @@ class DashboardFragment : Fragment() {
     }
 
     private fun showError(error: Throwable) {
-        Toast.makeText(requireContext(),error.message,Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), error.message, Toast.LENGTH_LONG).show()
     }
 }

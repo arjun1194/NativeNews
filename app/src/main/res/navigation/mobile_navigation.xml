@@ -19,7 +19,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.arjun1194.nativenews.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_articleDetail"
+            app:destination="@id/articleDetail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"

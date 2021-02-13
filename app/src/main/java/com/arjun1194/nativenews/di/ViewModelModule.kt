@@ -23,4 +23,5 @@ class ViewModelModule {
     ): NewsRepository {
         return NewsRepository(newsService, newsDao,sharedPrefHelper)
     }
+
 }

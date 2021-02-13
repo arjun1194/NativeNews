@@ -39,8 +39,8 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setupSwipeRefresh(){
-        binding.swipeRefresh.apply{
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.apply {
             setOnRefreshListener {
                 homeViewModel.getTopHeadlines()
             }
