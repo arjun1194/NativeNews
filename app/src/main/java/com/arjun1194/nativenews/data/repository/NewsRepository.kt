@@ -2,7 +2,9 @@ package com.arjun1194.nativenews.data.repository
 
 import com.arjun1194.nativenews.api.NewsService
 import com.arjun1194.nativenews.data.database.NewsDao
-import com.arjun1194.nativenews.data.model.NewsResponse
+import com.arjun1194.nativenews.data.model.Article
+import com.arjun1194.nativenews.data.model.DataResponse
+import com.arjun1194.nativenews.data.model.Source
 import com.arjun1194.nativenews.utils.SharedPrefHelper
 import com.arjun1194.nativenews.utils.exception.DataNotFoundException
 import com.arjun1194.nativenews.utils.isTimeGreaterThan
@@ -20,7 +22,7 @@ class NewsRepository @Inject constructor(
     private val sharedPrefHelper: SharedPrefHelper
 ) {
 
-    suspend fun getTopHeadlines(): Flow<NewsResponse> {
+    suspend fun getTopHeadlines(): Flow<DataResponse<List<Article>>> {
         return flow {
 
             try {
@@ -29,17 +31,28 @@ class NewsRepository @Inject constructor(
                 newsDao.insert(networkResponse.articles)
                 sharedPrefHelper.timestamp = Date().toString()
             } catch (e: Exception) {
-                emit(NewsResponse.Error(Throwable("Network is not available")))
+                emit(DataResponse.Error(Throwable("Network is not available")))
             } finally {
                 if (sharedPrefHelper.timestamp.isTimeGreaterThan())
                     newsDao.deleteAll()
                 val topHeadlines = newsDao.getTopHeadlines()
                 if (topHeadlines.isEmpty())
-                    emit(NewsResponse.Error(DataNotFoundException("Data is empty")))
-                else emit(NewsResponse.Success(topHeadlines))
+                    emit(DataResponse.Error(DataNotFoundException("Data is empty")))
+                else emit(DataResponse.Success(topHeadlines))
             }
 
 
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getSources(): Flow<DataResponse<List<Source>>> {
+        return flow{
+            try {
+                val networkResponse = newsService.getSources()
+                emit(DataResponse.Success<List<Source>>(networkResponse.sources))
+            } catch (e: Exception) {
+                emit(DataResponse.Error(DataNotFoundException("Data is empty")))
+            }
         }.flowOn(Dispatchers.IO)
     }
 }

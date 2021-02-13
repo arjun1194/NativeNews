@@ -1,6 +1,8 @@
 package com.arjun1194.nativenews.api
 
+import com.arjun1194.nativenews.data.model.SourcesResponse
 import com.arjun1194.nativenews.data.model.TopHeadlinesResponse
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
@@ -15,15 +17,28 @@ interface NewsService {
     @GET("top-headlines")
     suspend fun getTopHeadlines(
         @Query("country") country: String = "in",
-        @Query("apiKey") apiKey: String = "416399bd74834bf0b8cc23cbc9985360"
     ): TopHeadlinesResponse
+
+    @GET("sources")
+    suspend fun getSources(
+        @Query("country") country: String = "in",
+    ): SourcesResponse
+
 
     companion object {
         fun create(): NewsService {
             val logger = HttpLoggingInterceptor().apply { level = BASIC }
 
+            val authInterceptor = Interceptor {
+                val newRequest = it.request().newBuilder()
+                    .addHeader("x-api-key", "416399bd74834bf0b8cc23cbc9985360")
+                    .build()
+                it.proceed(newRequest)
+            }
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
+                .addInterceptor(authInterceptor)
                 .build()
 
             return Retrofit.Builder()

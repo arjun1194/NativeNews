@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arjun1194.nativenews.data.model.NewsResponse
+import com.arjun1194.nativenews.data.model.Article
+import com.arjun1194.nativenews.data.model.DataResponse
 import com.arjun1194.nativenews.data.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -15,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val newsRepository: NewsRepository) : ViewModel() {
 
-    private val _response = MutableLiveData<NewsResponse>()
-    val response: LiveData<NewsResponse> = _response
+    private val _response = MutableLiveData<DataResponse<List<Article>>>()
+    val response: LiveData<DataResponse<List<Article>>> = _response
     val showLoader = MutableLiveData(false)
 
 

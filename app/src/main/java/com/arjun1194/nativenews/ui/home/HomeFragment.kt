@@ -9,8 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.arjun1194.nativenews.data.model.Article
-import com.arjun1194.nativenews.data.model.NewsResponse
-import com.arjun1194.nativenews.data.model.TopHeadlinesResponse
+import com.arjun1194.nativenews.data.model.DataResponse
 import com.arjun1194.nativenews.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,8 +51,8 @@ class HomeFragment : Fragment() {
         homeViewModel.getTopHeadlines()
         homeViewModel.response.observe(viewLifecycleOwner) {
             when (it) {
-                is NewsResponse.Success -> showData(it.articles)
-                is NewsResponse.Error -> showError(it.throwable)
+                is DataResponse.Success<List<Article>> -> showData(it.data)
+                is DataResponse.Error -> showError(it.error)
             }
 
         }
