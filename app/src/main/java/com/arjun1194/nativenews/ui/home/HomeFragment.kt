@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.arjun1194.nativenews.R
 import com.arjun1194.nativenews.data.model.Article
 import com.arjun1194.nativenews.data.model.DataResponse
 import com.arjun1194.nativenews.databinding.FragmentHomeBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.arjun1194.nativenews.utils.exception.DataNotFoundException
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -74,7 +73,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun showError(throwable: Throwable) {
-        Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_LONG).show()
+        when(throwable){
+            is DataNotFoundException -> {
+                // show error screen
+               binding.errorScreen.root.visibility = View.VISIBLE
+               binding.errorScreen.retryButton.setOnClickListener {
+                    homeViewModel.getTopHeadlines()
+                    binding.errorScreen.root.visibility = View.GONE
+               }
+            }
+            else ->  {
+                Toast.makeText(requireContext(),throwable.message,Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
     private fun showData(articles: List<Article>) {

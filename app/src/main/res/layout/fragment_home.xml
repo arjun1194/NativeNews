@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
@@ -41,6 +37,12 @@
                     android:id="@+id/loader"
                     layout="@layout/feed_loader"
                     android:visibility="gone" />
+
+                <include
+                    android:id="@+id/errorScreen"
+                    layout="@layout/error_no_data"
+                    android:visibility="gone"
+                    />
 
             </FrameLayout>
 

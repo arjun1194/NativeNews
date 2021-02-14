@@ -40,6 +40,8 @@
                 layout="@layout/feed_loader"
                 android:visibility="gone" />
 
+
+
         </FrameLayout>
 
 

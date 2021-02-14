@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">NativeNews</string>
-    <string name="title_home">Headline</string>
-    <string name="title_dashboard">Source</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Headlines</string>
+    <string name="title_dashboard">Sources</string>
+    <string name="title_notifications">About</string>
     <string name="top_headlines">Top Headlines</string>
     <string name="shared_pref_file">news_pref</string>
+    <string name="about">Made by Arjun Bhardwaj in case of any doubts contact me at +91-8447692074. or contact me at my email <a href="mailto:arjunn1194@gmail.com">arjunn1194@gmail.com</a></string>
 </resources>
