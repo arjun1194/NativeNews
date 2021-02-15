@@ -62,6 +62,7 @@ class HomeFragment : Fragment() {
     private fun showLoader() {
         homeViewModel.showLoader.observe(viewLifecycleOwner) {
             if (it) {
+                binding.errorScreen.root.visibility = View.GONE
                 binding.articleList.visibility = View.GONE
                 binding.loader.visibility = View.VISIBLE
             } else {
@@ -76,11 +77,14 @@ class HomeFragment : Fragment() {
         when(throwable){
             is DataNotFoundException -> {
                 // show error screen
-               binding.errorScreen.root.visibility = View.VISIBLE
-               binding.errorScreen.retryButton.setOnClickListener {
+                Log.d(TAG, "showError: Data not found exception!!")
+                binding.errorScreen.root.visibility = View.VISIBLE
+                binding.articleList.visibility = View.GONE
+                binding.loader.visibility = View.GONE
+                binding.errorScreen.retryButton.setOnClickListener {
                     homeViewModel.getTopHeadlines()
                     binding.errorScreen.root.visibility = View.GONE
-               }
+                }
             }
             else ->  {
                 Toast.makeText(requireContext(),throwable.message,Toast.LENGTH_LONG).show()

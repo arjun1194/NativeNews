@@ -7,6 +7,7 @@ import com.arjun1194.nativenews.data.model.DataResponse
 import com.arjun1194.nativenews.data.model.Source
 import com.arjun1194.nativenews.utils.SharedPrefHelper
 import com.arjun1194.nativenews.utils.exception.DataNotFoundException
+import com.arjun1194.nativenews.utils.exception.NetworkRequestFailedException
 import com.arjun1194.nativenews.utils.isTimeGreaterThan
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +32,7 @@ class NewsRepository @Inject constructor(
                 newsDao.insert(networkResponse.articles)
                 sharedPrefHelper.timestamp = Date().toString()
             } catch (e: Exception) {
-                emit(DataResponse.Error(Throwable("Network is not available")))
+                emit(DataResponse.Error(NetworkRequestFailedException("Network Request Failed")))
             } finally {
                 if (sharedPrefHelper.timestamp.isTimeGreaterThan())
                     newsDao.deleteAll()
