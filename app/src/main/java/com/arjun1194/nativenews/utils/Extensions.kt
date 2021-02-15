@@ -26,10 +26,12 @@ fun String.isTimeGreaterThan(
     hours: Int = 2
 ): Boolean {
     val dateAfterHours = Date(Date().time + hours * 60 * 60 * 1000)
+    println("dateAfterHours is ---> $dateAfterHours")
 
     val simpleDateFormat = SimpleDateFormat()
     return try {
         val date = simpleDateFormat.parse(this)!!
+        println("date is ---> $date")
         date.after(dateAfterHours)
     } catch (e: Exception) {
         false
